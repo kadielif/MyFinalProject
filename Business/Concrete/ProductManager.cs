@@ -31,14 +31,14 @@ namespace Business.Concrete
             else
             {
                 _productDal.Add(product);
-                return new Result(true, "Ürün eklendi");
+                return new Result(true, Messages.ProductAddded);
             }
 
         }
 
         public IDataResult<List<Product>> GetAll()
         {
-            if (DateTime.Now.Hour==22)
+            if (DateTime.Now.Hour==18)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
