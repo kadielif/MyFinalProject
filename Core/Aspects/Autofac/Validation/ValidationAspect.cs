@@ -21,8 +21,9 @@ namespace Core.Aspects.Autofac.Validation
 
             _validatorType = validatorType;
         }
-        protected override void OnBefore(IInvocation invocation)
+         protected override void OnBefore(IInvocation invocation)
         {
+            //ivalidator ın instance ını oluşturur. Yani new ler.
             var validator = (IValidator)Activator.CreateInstance(_validatorType);
             var entityType = _validatorType.BaseType.GetGenericArguments()[0];
             var entities = invocation.Arguments.Where(t => t.GetType() == entityType);
