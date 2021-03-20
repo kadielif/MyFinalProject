@@ -1,13 +1,7 @@
 ﻿using Business.Abstract;
-using Business.Concrete;
-using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace WebAPI.Controllers
 {
@@ -26,10 +20,11 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result=_productService.GetAll();
+            //Thread.Sleep(5000);
+            var result = _productService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
             return BadRequest(result.Message);
         }
@@ -43,6 +38,18 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result.Message);
         }
+        [HttpGet("getbycategory")]
+        public IActionResult GetByCategory(int id)
+        {
+            var result = _productService.GetAllCategoryId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
+
         [HttpPost("add")]
         public IActionResult Add(Product product)
         {
@@ -52,7 +59,7 @@ namespace WebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest(result);
-           
+
         }
     }
 }
