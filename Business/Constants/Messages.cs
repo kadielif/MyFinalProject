@@ -1,12 +1,15 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
 {
-    public static class Messages 
+    public static class Messages
     {
+
         public static string ProductAddded = "Ürün eklendi";
         public static string ProductNameInvalid = "Ürün ismi geçersiz";
 
@@ -14,8 +17,11 @@ namespace Business.Constants
         public static string ProductListed = "Ürünler listelendi";
 
         public static string ProductCountOfCategoryError = "Bu kategoriye daha fazla ürün eklenemez";
-        public static string ProductNameAlreadyExists="Bu üründen sistemde var";
+        public static string ProductNameAlreadyExists = "Bu üründen sistemde var";
 
         public static string CategoryLimitExceded = "Kategori limiti aşıldığı için yeni ürün eklenemiyor.";
+        public static string AuthorizationDenied = "Yetkiniz yok";
+
+        public static string AccessTokenCreated { get; internal set; }
     }
 }

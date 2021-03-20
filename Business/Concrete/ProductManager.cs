@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -32,12 +33,13 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        //[ValidationAspect(typeof(ProductValidator))]
+        //[SecuredOperation("admin,product.add")]
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
             //İş kodları 
-            IResult result=BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryID), CheckIfProductNameExists(product.ProductName), CheckIfCategoryLimitExceeded());
-            if (result!=null)
+            IResult result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryID), CheckIfProductNameExists(product.ProductName), CheckIfCategoryLimitExceeded());
+            if (result != null)
             {
                 return result;
             }
@@ -57,7 +59,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Product>> GetAllCategoryId(int id)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.ProductID == id), Messages.ProductListed);
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryID == id), Messages.ProductListed);
         }
 
         public IDataResult<List<Product>> GetAllUnitPrice(decimal min, decimal max)
@@ -106,7 +108,7 @@ namespace Business.Concrete
         {
             //Any : Var mı yok mu, bool value
             int result = _categoryService.GetAll().Data.Count();
-            if (result>=15)
+            if (result >= 15)
             {
                 return new ErrorResult(Messages.CategoryLimitExceded);
             }
