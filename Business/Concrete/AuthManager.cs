@@ -49,14 +49,14 @@ namespace Business.Concrete
                 return new ErrorDataResult<User>("Parola hatası");
             }
 
-            return new SuccessDataResult<User>(userToCheck, "Kullanıcı mevcut");
+            return new SuccessDataResult<User>(userToCheck, "Başarılı giriş");
         }
 
         public IResult UserExists(string email)
         {
             if (_userService.GetByMail(email) != null)
             {
-                return new ErrorResult("Kullanıcı bulunamadı");
+                return new ErrorResult("Kullanıcı mevcut");
             }
             return new SuccessResult();
         }
